@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     news: News;
+    menus: Menu;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +80,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
+    menus: MenusSelect<false> | MenusSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -161,9 +163,10 @@ export interface Media {
  */
 export interface News {
   id: number;
+  cover: number | Media;
+  date: string;
   title: string;
   slug: string;
-  cover: number | Media;
   description: string;
   content: {
     root: {
@@ -185,6 +188,24 @@ export interface News {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menus".
+ */
+export interface Menu {
+  id: number;
+  image: number | Media;
+  title: string;
+  slug: string;
+  type?: ('coffee' | 'non-coffee') | null;
+  promo?: ('yes' | 'no') | null;
+  priceBefore?: number | null;
+  priceAfter?: number | null;
+  price?: number | null;
+  description: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -201,6 +222,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: number | News;
+      } | null)
+    | ({
+        relationTo: 'menus';
+        value: number | Menu;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -282,11 +307,29 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "news_select".
  */
 export interface NewsSelect<T extends boolean = true> {
+  cover?: T;
+  date?: T;
   title?: T;
   slug?: T;
-  cover?: T;
   description?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menus_select".
+ */
+export interface MenusSelect<T extends boolean = true> {
+  image?: T;
+  title?: T;
+  slug?: T;
+  type?: T;
+  promo?: T;
+  priceBefore?: T;
+  priceAfter?: T;
+  price?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }

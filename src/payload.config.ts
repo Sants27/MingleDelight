@@ -12,6 +12,7 @@ import { Media } from './collections/Media'
 import { News } from './collections/News'
 import { General } from './globals/General'
 import { Menu } from './collections/Menu'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,6 +31,19 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  email: nodemailerAdapter({
+      defaultFromAddress: 'noreply@mingledelight.com',
+      defaultFromName: 'Payload',
+      // Any Nodemailer transport can be used
+      transportOptions: {
+        host: process.env.SMTP_HOST,
+        port: 1025,
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      },
+  }),
   db: sqliteAdapter({
     client: {
       url: process.env.DATABASE_URI || '',

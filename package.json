@@ -19,6 +19,7 @@
     "@payloadcms/next": "3.37.0",
     "@payloadcms/payload-cloud": "3.37.0",
     "@payloadcms/richtext-lexical": "3.37.0",
+    "@payloadcms/storage-uploadthing": "^3.37.0",
     "@tailwindcss/postcss": "^4.1.4",
     "graphql": "^16.11.0",
     "next": "15.3.1",

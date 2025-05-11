@@ -13,6 +13,7 @@ import { News } from './collections/News'
 import { General } from './globals/General'
 import { Menu } from './collections/Menu'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,6 +54,17 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    uploadthingStorage({
+      collections:{
+        media: {
+          disablePayloadAccessControl: true,
+        },
+      },
+      options: {
+        token: process.env.UPLOAD_THING_TOKEN,
+        acl: 'public-read',
+      }
+    }),
     // storage-adapter-placeholder
   ],
 })

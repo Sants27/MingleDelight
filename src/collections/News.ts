@@ -1,9 +1,26 @@
 import { CollectionConfig } from "payload";
-// import slugify from "slugify";
+import slugify from "slugify";
 
 export const News : CollectionConfig = {
     slug: 'news',
     fields: [
+        {
+            name: 'cover',
+            type: 'upload',
+            relationTo: "media",
+            required: true,
+        },
+        {
+            name: "date",
+            type: "date",
+            label: "Event Date",
+            required: true,
+            // admin: {
+            //     date: {
+            //         pickerAppearance: 'dayOnly',
+            //     },
+            // },
+        },
         {
             name: "title",
             type: "text",
@@ -13,15 +30,9 @@ export const News : CollectionConfig = {
             name: "slug",
             type: "text",
             required: true,
-            // admin: {
-            //     readOnly: true, // tidak bisa diubah manual
-            // },
-        },
-        {
-            name: 'cover',
-            type: 'upload',
-            relationTo: "media",
-            required: true,
+            admin: {
+                readOnly: true, // tidak bisa diubah manual
+            },
         },
         {
             name: "description",
@@ -33,25 +44,16 @@ export const News : CollectionConfig = {
             type: "richText",
             required: true,
         },
-        // {
-        //     name: "date",
-        //     type: "date",
-        //     required: true,
-        //     admin: {
-        //         date: {
-        //             pickerAppearance: 'dayOnly',
-        //         },
-        //     },
-        // },
+        
     ],
-    // hooks: {
-    //     beforeValidate: [
-    //         ({ data }) => {
-    //             if (data?.title && !data.slug) {
-    //                 data.slug = slugify(data.title, { lower: true, strict: true });
-    //             }
-    //             return data;
-    //         }
-    //     ],
-    // },
+    hooks: {
+        beforeValidate: [
+            ({ data }) => {
+                if (data?.title && !data.slug) {
+                    data.slug = slugify(data.title, { lower: true, strict: true });
+                }
+                return data;
+            }
+        ],
+    },
 };

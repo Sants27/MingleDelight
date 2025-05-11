@@ -46,7 +46,7 @@ export default function NewsList({news} : NewsListProps) {
                       year: "numeric",
                     })}
                   </p>
-                  <h3 className="text-xl font-bold mb-3">{news.title}</h3>
+                  <h3 className="text-[#5C3D2E] text-xl font-bold mb-3">{news.title}</h3>
                   <p className="text-gray-600 mb-4 line-clamp-3">
                     {news.description}
                   </p>
